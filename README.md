@@ -1,4 +1,5 @@
-
+<div align="center">
+<pre>
     ╔════════════════════════════════════════════════════════════════════════════════════════╗
     ║ ██████╗ ██╗   ██╗     ██████╗  ██████╗  ████████╗ ██╗ ███████╗ ██╗ ███╗   ██╗ ███████╗ ║
     ║ ██   ██╗╚██╗ ██╔╝    ██╔═══██╗ ██   ██╗ ╚══██╔══╝ ██║ ██╔════╝ ██║ ████╗  ██║ ██╔════╝ ║
@@ -10,6 +11,8 @@
     ║ P Y O P T I F I N E   M A N A G E R                                                    ║
     ║ Author : NovaStepStudios                                                               ║
     ╚════════════════════════════════════════════════════════════════════════════════════════╝
+</pre>
+</div>
 
 **PyOptifine** es un **gestor avanzado de descargas de OptiFine** escrito en **Python**, diseñado para automatizar, organizar y centralizar la obtención de todas las versiones disponibles de OptiFine directamente desde sus mirrors oficiales.
 
@@ -136,6 +139,30 @@ Ideal para:
 * Sistemas de cache
 * Automatización
 
+```json
+[
+  {
+    "minecraft_version": "1.21.10",
+    "optifine_version": "OptiFine HD U J7 pre11",
+    "mirror_url": "http://optifine.net/adloadx?f=preview_OptiFine_1.21.10_HD_U_J7_pre11.jar",
+    "forge_version": "Forge 60.1.0",
+    "release_date": "03.12.2025",
+    "filename": "preview_OptiFine_1.21.10_HD_U_J7_pre11.jar",
+    "changelog_url": "changelog?f=preview_OptiFine_1.21.10_HD_U_J7_pre11.jar"
+  },
+  {
+    "minecraft_version": "1.21.10",
+    "optifine_version": "OptiFine HD U J7 pre10",
+    "mirror_url": "http://optifine.net/adloadx?f=preview_OptiFine_1.21.10_HD_U_J7_pre10.jar",
+    "forge_version": "Forge 60.1.0",
+    "release_date": "02.12.2025",
+    "filename": "preview_OptiFine_1.21.10_HD_U_J7_pre10.jar",
+    "changelog_url": "changelog?f=preview_OptiFine_1.21.10_HD_U_J7_pre10.jar"
+  },
+    Etc...
+```
+
+
 ---
 
 ## ⚠️ Notas importantes
@@ -145,13 +172,6 @@ Ideal para:
 * **NO instala** OptiFine en Minecraft
 
 👉 Su función es **descargar, organizar y exponer información**, dejando la instalación al launcher o herramienta que lo consuma.
-
----
-
-## 👤 Autor
-
-**NovaStepStudios**
-Proyecto enfocado en tooling avanzado, automatización y ecosistemas de launchers.
 
 ---
 
