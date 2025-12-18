@@ -15,7 +15,6 @@ import gzip
 import io
 import sys
 
-# Configuración por defecto (puede ser modificada externamente)
 CONFIG = {
     'MIN_VERSION': "1.7.10",
     'MAX_THREADS': 15,
@@ -25,20 +24,17 @@ CONFIG = {
 }
 
 def set_config(**kwargs):
-    """Permite configurar el módulo externamente"""
     for key, value in kwargs.items():
         if key.upper() in CONFIG:
             CONFIG[key.upper()] = value
 
 def get_directories():
-    """Retorna los directorios configurados"""
     base_dir = CONFIG['BASE_DIR']
     jar_dir = os.path.join(base_dir, "Jar")
     changelog_dir = os.path.join(base_dir, "Changelogs")
     return base_dir, jar_dir, changelog_dir
 
 def ensure_directories():
-    """Crea los directorios necesarios"""
     base_dir, jar_dir, changelog_dir = get_directories()
     os.makedirs(jar_dir, exist_ok=True)
     os.makedirs(changelog_dir, exist_ok=True)
@@ -63,7 +59,6 @@ def format_bar(percent, width=40):
     return '█' * filled + '░' * (width - filled)
 
 class SilentConsole:
-    """Consola silenciosa que solo muestra la barra de progreso"""
     def __init__(self):
         self._last_len = 0
         self.start_time = time.time()
@@ -72,11 +67,9 @@ class SilentConsole:
         self.errors = []
     
     def add_message(self, message):
-        """Agrega un mensaje para mostrar al final"""
         self.messages.append(message)
     
     def add_error(self, error):
-        """Agrega un error para mostrar al final"""
         self.errors.append(error)
     
     def clear(self):
@@ -84,7 +77,6 @@ class SilentConsole:
         sys.stdout.flush()
     
     def write(self, text, newline=False, clear_first=False):
-        """Solo escribe si es la barra de progreso, de lo contrario guarda el mensaje"""
         if '[' in text and ']' in text and ('█' in text or '░' in text):
             if clear_first:
                 self.clear()
@@ -120,7 +112,6 @@ class SilentConsole:
             self.write(f"{prefix} [{bar}] {current}/{total} (100%) ✓", newline=True)
     
     def print_all_messages(self):
-        """Muestra todos los mensajes guardados"""
         if self.messages:
             print("\n" + "=" * 60)
             print("📋 MENSAJES DEL PROCESO:")
@@ -252,30 +243,22 @@ class DownloadManager:
         self.download_details = []
     
     def extract_download_url_from_html(self, html_content, mirror_url):
-        """
-        Extrae la URL real de descarga del HTML de la página mirror.
-        Busca patrones como: downloadx?f=preview_OptiFine_1.21.10_HD_U_J7_pre9.jar&x=...
-        """
         try:
-            # Buscar el patrón href='downloadx?f=...&x=...'
             pattern = r"href=['\"]?(downloadx\?f=[^'\">\s]+)['\"]?"
             match = re.search(pattern, html_content, re.IGNORECASE)
             
             if match:
                 download_path = match.group(1)
                 
-                # Construir la URL completa
                 parsed_mirror = urllib.parse.urlparse(mirror_url)
                 base_url = f"{parsed_mirror.scheme}://{parsed_mirror.netloc}"
                 
-                # Si el path no empieza con /, añadirlo
                 if not download_path.startswith('/'):
                     download_path = '/' + download_path
                 
                 final_url = base_url + download_path
                 return final_url
             
-            # Fallback: buscar cualquier enlace con .jar
             pattern_jar = r"href=['\"]?([^'\">\s]*\.jar[^'\">\s]*)['\"]?"
             match_jar = re.search(pattern_jar, html_content, re.IGNORECASE)
             
@@ -298,22 +281,14 @@ class DownloadManager:
             return None
     
     def get_final_url(self, mirror_url):
-        """
-        Obtiene la URL final del JAR desde la página mirror.
-        1. Descarga el HTML del mirror
-        2. Extrae la URL real de descarga
-        """
         try:
-            # Construir la URL completa del mirror si es necesario
             if not mirror_url.startswith('http'):
                 mirror_url = f"https://optifine.net/{mirror_url}"
             
-            # Descargar el HTML de la página mirror
             request = urllib.request.Request(mirror_url)
             response = self.opener.open(request, timeout=15)
             html = response.read().decode('utf-8', errors='ignore')
             
-            # Extraer la URL real de descarga
             download_url = self.extract_download_url_from_html(html, mirror_url)
             
             if download_url:
@@ -379,7 +354,6 @@ class DownloadManager:
             jar_path = os.path.join(jar_dir, filename)
             
             try:
-                # Paso 1: Obtener la URL real del JAR desde el mirror
                 mirror_url = entry['mirror_url']
                 if not mirror_url.startswith('http'):
                     mirror_url = f"https://optifine.net/{mirror_url}"
@@ -399,10 +373,8 @@ class DownloadManager:
                     self.queue.task_done()
                     continue
                 
-                # Paso 2: Descargar el JAR real
                 success, jar_size, existed = self.download_file(final_url, jar_path, mirror_url)
                 
-                # Paso 3: Descargar changelog si está habilitado
                 changelog_success = False
                 changelog_size = 0
                 if CONFIG['DOWNLOAD_CHANGELOGS'] and 'changelog_url' in entry:

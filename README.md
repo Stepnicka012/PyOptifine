@@ -1,143 +1,106 @@
 <div align="center">
-<pre>
-    ╔════════════════════════════════════════════════════════════════════════════════════════╗
-    ║ ██████╗ ██╗   ██╗     ██████╗  ██████╗  ████████╗ ██╗ ███████╗ ██╗ ███╗   ██╗ ███████╗ ║
-    ║ ██   ██╗╚██╗ ██╔╝    ██╔═══██╗ ██   ██╗ ╚══██╔══╝ ██║ ██╔════╝ ██║ ████╗  ██║ ██╔════╝ ║
-    ║ ██████╔╝ ╚████╔╝     ██║   ██║ ██████╔╝    ██║    ██║ █████╗   ██║ ██╔██╗ ██║ █████╗   ║
-    ║ ██╔═══╝   ╚██╔╝      ██║   ██║ ██╔═══╝     ██║    ██║ ██╔══╝   ██║ ██║╚██╗██║ ██╔══╝   ║
-    ║ ██║        ██║       ╚██████╔╝ ██║         ██║    ██║ ██║      ██║ ██║ ╚████║ ███████╗ ║
-    ║ ╚═╝        ╚═╝        ╚═════╝  ╚═╝         ╚═╝    ╚═╝ ╚═╝      ╚═╝ ╚═╝  ╚═══╝ ╚══════╝ ║
-    ║                                                                                        ║
-    ║ P Y O P T I F I N E   M A N A G E R                                                    ║
-    ║ Author : NovaStepStudios                                                               ║
-    ╚════════════════════════════════════════════════════════════════════════════════════════╝
-</pre>
+  <img src="./assets/PyOptifine.png" loading="lazy" decoding="async" width="50%">
 </div>
 
-**PyOptifine** es un **gestor avanzado de descargas de OptiFine** escrito en **Python**, diseñado para automatizar, organizar y centralizar la obtención de todas las versiones disponibles de OptiFine directamente desde sus mirrors oficiales.
+**PyOptifine** es un **gestor avanzado y automatizador de OptiFine** escrito en **Python**, diseñado para:
 
-El proyecto está pensado tanto para **usuarios avanzados** como para **desarrolladores de launchers**, scripts o herramientas que necesiten **control total sobre las versiones de OptiFine**, sin depender de descargas manuales.
+* 📥 Descargar automáticamente **todas las versiones de OptiFine** desde sus mirrors oficiales
+* 🔧 **Instalar OptiFine sin interfaz gráfica** mediante automatización del instalador oficial
+* 📦 Generar manifiestos JSON con metadata completa para launchers y herramientas
+* 🛠️ Facilitar integración en scripts, launchers y servidores
+* ⚡ Ejecutar descargas en paralelo y generar reportes de progreso
+
+El proyecto está pensado para **usuarios avanzados** y **desarrolladores** que necesiten **control total** sobre las versiones de OptiFine.
 
 ---
 
-## 🚀 Características principales
+## ⚠️ DISCLAIMER LEGAL
 
-* 📥 **Descarga automática de OptiFine**
+**PyOptiFine es open-source y automatiza procesos que puedes hacer manualmente:**
 
-  * Descarga todas las versiones disponibles desde OptiFine.net
-  * Soporta versiones **estables y preview/beta**
-  * Permite definir una **versión mínima de Minecraft**
+* ✅ Descarga OptiFine desde mirrors oficiales
+* ✅ NO distribuye OptiFine ni versiones modificadas
+* ✅ Automatiza el instalador oficial sin reemplazarlo
+* ✅ Uso personal y educativo
 
-* ⚡ **Descargas en paralelo**
+### Derechos de Propiedad
 
-  * Uso de **multithreading** configurable
-  * Mucho más rápido que descargas secuenciales
+* **OptiFine:** sp614x, todos los derechos reservados, [optifine.net](https://optifine.net)
+* **Minecraft:** Mojang Studios / Microsoft, requiere licencia válida
+* **PyOptiFine:** NovaStepStudios, MIT License, NO afiliado a OptiFine o Mojang
 
-* 📄 **Generación de manifiesto JSON**
+---
 
-  * Crea un archivo con metadata completa de todas las versiones encontradas
-  * Ideal para integrarlo en launchers o sistemas externos
+## ⚙️ Cómo Funciona
 
-* 🧠 **Detección inteligente**
+1. **Descarga:** Scraping de mirrors oficiales + descarga directa + verificación de integridad
+2. **Instalación automatizada:**
 
-  * Omite archivos ya descargados
-  * Evita duplicados automáticamente
+   * Decompilación temporal del instalador
+   * Inyección de argumentos CLI (`--mcdir`)
+   * Recompilación y reempaquetado del JAR
+   * Ejecución automática y limpieza de temporales
+3. **Seguridad:** OptiFine final idéntico al oficial, cambios reversibles, sin permisos de admin
 
-* 🖥️ **CLI + menú interactivo**
+---
 
-  * Modo línea de comandos para automatización
-  * Menú interactivo si no se pasan argumentos
+## 🚀 Características
 
-* 📦 **Arquitectura modular**
-
-  * Downloader y generador de manifiesto desacoplados
-  * Fácil de extender o integrar en otros proyectos
+* Descarga de versiones estables y preview/beta
+* Filtrado por versión mínima de Minecraft
+* Descargas en paralelo y multithreading configurable
+* Generación de manifiestos JSON completos
+* Interfaz CLI y menú interactivo
+* Arquitectura modular y fácil integración en otros proyectos
 
 ---
 
 ## 🛠️ Requisitos
 
-* Python **3.8+**
-* Sistema operativo: **Linux / Windows / macOS**
-* Conexión a internet
+* **Python 3.8+**
+* **Java JDK** con `javac`
 
-No requiere dependencias externas pesadas.
-
----
-
-## ▶️ Uso básico
-
-### Mostrar ayuda
-
-```bash
-python3 Main.py help
-```
-
-### Descargar todas las versiones desde Minecraft 1.16
-
-```bash
-python3 Main.py download --min-version 1.16
-```
-
-### Descargar sin previews (solo versiones estables)
-
-```bash
-python3 Main.py download --no-previews
-```
-
-### Descargar usando 10 hilos
-
-```bash
-python3 Main.py download --threads 10
-```
-
-### Generar solo el manifiesto
-
-```bash
-python3 Main.py manifest
-```
-
-### Ejecutar todo (descarga + manifiesto)
-
-```bash
-python3 Main.py all --min-version 1.12 --threads 20
-```
+  * Linux: Fedora/DNF, Ubuntu/APT, Arch/Pacman
+  * Windows: Oracle o Adoptium
+  * macOS: brew install openjdk
+* Minecraft instalado
+* Conexión estable a internet y ~500MB de espacio
 
 ---
 
-## 🧭 Menú interactivo
+## ▶️ Uso Básico
 
-Si ejecutás el script **sin argumentos**, PyOptifine muestra un menú interactivo:
-
-```bash
-python3 Main.py
-```
-
-Desde ahí podés:
-
-* Configurar versión mínima
-* Elegir si incluir previews
-* Ajustar número de hilos
-* Ejecutar todo sin escribir comandos
+* Mostrar ayuda: `python3 Main.py help`
+* Descargar versiones: `python3 Main.py download --min-version 1.16 --threads 10 --no-previews`
+* Generar manifiesto: `python3 Main.py manifest`
+* Instalar OptiFine: `python3 Main.py install --jar OptiFine_1.20.1_HD_U_I5.jar --mcdir /ruta/a/.minecraft`
+* Ejecutar todo: `python3 Main.py all --min-version 1.12 --threads 20`
 
 ---
 
-## 📄 Manifiesto JSON
+## 🧭 Menú Interactivo
 
-El manifiesto generado incluye:
+Opciones al ejecutar sin argumentos:
 
-* Versión de Minecraft
-* Versión de OptiFine
-* Tipo (estable / preview)
-* URLs reales de descarga
-* Información útil para launchers
+1. Configurar versión mínima de Minecraft
+2. Incluir/excluir previews/beta
+3. Ajustar hilos para descargas paralelas
+4. Ejecutar descarga
+5. Generar manifiesto JSON
+6. Ejecutar todo (descarga + manifiesto)
+7. Instalar OptiFine desde archivo local
 
-Ideal para:
+---
 
-* Launchers personalizados
-* Mirrors
-* Sistemas de cache
-* Automatización
+## 📄 Formato del Manifiesto JSON
+
+Campos:
+
+* `minecraft_version`, `optifine_version`, `mirror_url`, `forge_version`, `release_date`, `filename`, `changelog_url`
+
+Uso: Launchers, mirrors locales, automatización de instalaciones, monitoreo de versiones
+
+Ejemplo:
 
 ```json
 [
@@ -149,33 +112,24 @@ Ideal para:
     "release_date": "03.12.2025",
     "filename": "preview_OptiFine_1.21.10_HD_U_J7_pre11.jar",
     "changelog_url": "changelog?f=preview_OptiFine_1.21.10_HD_U_J7_pre11.jar"
-  },
-  {
-    "minecraft_version": "1.21.10",
-    "optifine_version": "OptiFine HD U J7 pre10",
-    "mirror_url": "http://optifine.net/adloadx?f=preview_OptiFine_1.21.10_HD_U_J7_pre10.jar",
-    "forge_version": "Forge 60.1.0",
-    "release_date": "02.12.2025",
-    "filename": "preview_OptiFine_1.21.10_HD_U_J7_pre10.jar",
-    "changelog_url": "changelog?f=preview_OptiFine_1.21.10_HD_U_J7_pre10.jar"
-  },
-    Etc...
+  }
+  Etc...
 ```
 
+---
+
+## 🤝 Contribuir
+
+* Reportar bugs en GitHub
+* Sugerir features con etiqueta `enhancement`
+* Pull Requests: fork → branch → commit → push → PR
 
 ---
 
-## ⚠️ Notas importantes
+## 📞 Contacto
 
-* PyOptifine **NO modifica** los archivos `.jar`
-* **NO parchea** OptiFine
-* **NO instala** OptiFine en Minecraft
+* GitHub Issues para bugs/features
+* Autor: NovaStepStudios
+* Proyecto: [PyOptiFine en GitHub](#)
 
-👉 Su función es **descargar, organizar y exponer información**, dejando la instalación al launcher o herramienta que lo consuma.
-
----
-
-## 📜 Licencia
-
-Uso educativo y de desarrollo.
-OptiFine es propiedad de sus respectivos autores.
+**Disclaimer:** Automatización de instalaciones legítimas de OptiFine, uso educativo y de desarrollo.
